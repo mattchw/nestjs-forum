@@ -4,7 +4,6 @@ import { FindConditions, Like, Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { CreateUserDto, ListUserDto } from './dto/user.dto';
 import { User } from './models/user.entity';
-import { skip } from 'rxjs';
 
 @Injectable()
 export class UserService {
