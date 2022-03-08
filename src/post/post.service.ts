@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserService } from 'src/user/user.service';
 import { FindConditions, Like, Repository } from 'typeorm';
@@ -11,7 +11,7 @@ export class PostService {
     @InjectRepository(Post)
     private readonly postsRepository: Repository<Post>,
     private userService: UserService,
-  ) { }
+  ) {}
 
   async create(createPostDto: CreatePostDto, userId: number): Promise<Post> {
     const user = await this.userService.get(userId);
@@ -23,6 +23,14 @@ export class PostService {
     this.postsRepository.save(newPost);
 
     return newPost;
+  }
+
+  async get(postId: number): Promise<Post> {
+    const post = await this.postsRepository.findOne(postId);
+    if (post === null) {
+      throw new NotFoundException(`Post with id: ${postId} not found`);
+    }
+    return post;
   }
 
   async list(params?: ListPostDto): Promise<{ count: number; rows: Post[] }> {

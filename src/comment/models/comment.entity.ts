@@ -1,4 +1,5 @@
 import { User } from '../../user/models/user.entity';
+import { Post } from '../../post/models/post.entity';
 import {
   Entity,
   Column,
@@ -8,18 +9,16 @@ import {
 } from 'typeorm';
 
 @Entity()
-export class Post {
+export class Comment {
   @PrimaryGeneratedColumn()
-  postId: number;
-
-  @Column()
-  category: string;
-
-  @Column()
-  title: string;
+  commentId: number;
 
   @Column()
   content: string;
+
+  @OneToOne(() => Post)
+  @JoinColumn()
+  post: Post;
 
   @OneToOne(() => User)
   @JoinColumn()

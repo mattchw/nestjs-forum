@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty } from 'class-validator';
 
-export class ListPostDto {
+export class ListCommentDto {
   @ApiProperty({ required: false, default: 20 })
   take?: number;
   @ApiProperty({
@@ -10,19 +10,9 @@ export class ListPostDto {
     description: 'Skip number of rows',
   })
   skip?: number;
-  @ApiProperty({ required: false })
-  title?: string;
 }
 
-export class CreatePostDto {
-  @IsNotEmpty()
-  @ApiProperty()
-  readonly category: string;
-
-  @IsNotEmpty()
-  @ApiProperty()
-  readonly title: string;
-
+export class CreateCommentDto {
   @IsNotEmpty()
   @ApiProperty()
   readonly content: string;
