@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Patch,
@@ -71,5 +72,11 @@ export class PostController {
       postId,
       req.user.userId,
     );
+  }
+
+  @Delete(':postId(\\d+)')
+  @UseGuards(RoleGuard(['Admin']))
+  remove(@Param('postId') postId: number): Promise<void> {
+    return this.postService.delete(postId);
   }
 }

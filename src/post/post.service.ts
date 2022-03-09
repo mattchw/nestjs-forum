@@ -65,4 +65,8 @@ export class PostService {
     const updatedPost = await this.get(postId);
     return updatedPost;
   }
+
+  async delete(postId: number): Promise<void> {
+    await this.postsRepository.delete(postId);
+  }
 }
