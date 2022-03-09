@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FindConditions, Like, Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
-import { CreateUserDto, ListUserDto } from './dto/user.dto';
+import { CreateUserDto, ListUserDto, UpdateUserDto } from './dto/user.dto';
 import { User } from './models/user.entity';
 
 @Injectable()
@@ -19,7 +19,7 @@ export class UserService {
       hash,
     });
 
-    this.usersRepository.save(newUser);
+    await this.usersRepository.save(newUser);
 
     return newUser;
   }
@@ -65,6 +65,13 @@ export class UserService {
       },
     });
     return user;
+  }
+
+  async update(userId: number, updateUserDto: UpdateUserDto): Promise<User> {
+    const user = await this.get(userId);
+    await this.usersRepository.update(user.userId, updateUserDto);
+    const updatedUser = await this.get(userId);
+    return updatedUser;
   }
 
   async delete(userId: number): Promise<void> {

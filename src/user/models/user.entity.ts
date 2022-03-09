@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, Index } from 'typeorm';
 
 import { RoleStr, RoleType } from '../../auth/interfaces/auth.interface';
 
@@ -10,6 +10,7 @@ export class User {
   @Column()
   displayName: string;
 
+  @Index({ unique: true })
   @Column({
     unique: true,
   })

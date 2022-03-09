@@ -1,5 +1,6 @@
-import { IsNotEmpty } from 'class-validator';
+import { IsNotEmpty, IsOptional } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+import { RoleStr, RoleType } from 'src/auth/interfaces/auth.interface';
 
 export class ListUserDto {
   @ApiProperty({ required: false, default: 20 })
@@ -26,4 +27,24 @@ export class CreateUserDto {
   @IsNotEmpty()
   @ApiProperty()
   readonly password: string;
+}
+
+export class UpdateUserDto {
+  @IsOptional()
+  @ApiProperty({ required: false })
+  readonly displayName: string;
+
+  @IsOptional()
+  @ApiProperty({
+    required: false,
+    default: RoleStr[0],
+  })
+  readonly role: RoleType;
+
+  @IsOptional()
+  @ApiProperty({
+    required: false,
+    default: true,
+  })
+  readonly isActive: boolean;
 }

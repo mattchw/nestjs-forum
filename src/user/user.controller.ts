@@ -7,10 +7,11 @@ import {
   Post,
   UseGuards,
   Query,
+  Patch,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import RoleGuard from '../auth/guard/role-auth.guard';
-import { CreateUserDto, ListUserDto } from './dto/user.dto';
+import { CreateUserDto, ListUserDto, UpdateUserDto } from './dto/user.dto';
 import { User } from './models/user.entity';
 import { UserService } from './user.service';
 
@@ -35,6 +36,14 @@ export class UserController {
   @Get(':userId(\\d+)')
   findOne(@Param('userId') userId: number): Promise<User> {
     return this.userService.get(userId);
+  }
+
+  @Patch(':userId(\\d+)')
+  updateOne(
+    @Param('userId') userId: number,
+    @Body() updateUserDto: UpdateUserDto,
+  ): Promise<User> {
+    return this.userService.update(userId, updateUserDto);
   }
 
   @Delete(':userId(\\d+)')
