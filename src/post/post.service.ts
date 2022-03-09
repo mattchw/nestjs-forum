@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserService } from 'src/user/user.service';
 import { FindConditions, Like, Repository } from 'typeorm';
-import { CreatePostDto, ListPostDto } from './dto/post.dto';
+import { CreatePostDto, ListPostDto, UpdatePostDto } from './dto/post.dto';
 import { Post } from './models/post.entity';
 
 @Injectable()
@@ -57,5 +57,12 @@ export class PostService {
       count,
       rows: posts,
     };
+  }
+
+  async update(postId: number, updatePostDto: UpdatePostDto): Promise<Post> {
+    const post = await this.get(postId);
+    await this.postsRepository.update(post.postId, updatePostDto);
+    const updatedPost = await this.get(postId);
+    return updatedPost;
   }
 }

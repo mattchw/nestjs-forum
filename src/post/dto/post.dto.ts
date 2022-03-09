@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty } from 'class-validator';
+import { IsNotEmpty, IsOptional } from 'class-validator';
 
 export class ListPostDto {
   @ApiProperty({ required: false, default: 20 })
@@ -25,5 +25,25 @@ export class CreatePostDto {
 
   @IsNotEmpty()
   @ApiProperty()
+  readonly content: string;
+}
+
+export class UpdatePostDto {
+  @IsOptional()
+  @ApiProperty({
+    required: false,
+  })
+  readonly category: string;
+
+  @IsOptional()
+  @ApiProperty({
+    required: false,
+  })
+  readonly title: string;
+
+  @IsOptional()
+  @ApiProperty({
+    required: false,
+  })
   readonly content: string;
 }
