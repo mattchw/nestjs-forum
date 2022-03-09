@@ -42,6 +42,11 @@ export class PostController {
     return this.postService.create(createPostDto, req.user.userId);
   }
 
+  @Get(':postId(\\d+)')
+  findOne(@Param('postId') postId: number): Promise<PostModel> {
+    return this.postService.get(postId);
+  }
+
   @Post(':postId(\\d+)/comments')
   createComment(
     @Body() createCommentDto: CreateCommentDto,
